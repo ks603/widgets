@@ -2,10 +2,9 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const Search = () => {
-  const [term, setTerm] = useState('programming');
+  const [term, setTerm] = useState('Programming');
   const [results, setResults] = useState([]);
 
-  console.log(results)
 
   useEffect(() => {
      const search = async () => {
@@ -19,11 +18,24 @@ const Search = () => {
         },
       });
 
-      setResults(data);
+      setResults(data.query.search);
      };
 
     search();
-  }, [term])
+  }, [term]);
+
+  const renderedResults = results.map((results) => {
+    return ( 
+    <div className="item">
+      <div className="content">
+        <div className="header">
+          {results.title}
+        </div>
+        {results.snippet}
+      </div>
+    </div>
+    );
+  });
 
   return (
     <div>
@@ -36,6 +48,9 @@ const Search = () => {
             className="input"
           />
         </div>
+      </div>
+      <div className="ui celled list">
+        {renderedResults}
       </div>
     </div>
   )
