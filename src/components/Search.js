@@ -19,8 +19,19 @@ const Search = () => {
 
       setResults(data.query.search)
     }
-    if (term) {
+
+    if (term && !results.length) {
       search()
+    } else {
+      const timeoutId = setTimeout(() => {
+        if (term) {
+          search()
+        }
+      }, 500)
+
+      return () => {
+        clearTimeout(timeoutId)
+      }
     }
   }, [term])
 
